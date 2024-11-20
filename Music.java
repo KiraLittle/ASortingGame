@@ -23,12 +23,15 @@ public class Music extends Actor
      */
     public void act()
     {
-        Greenfoot.playSound("664888__yellowtree__rb-clean-guitar.wav");
+        GreenfootSound music = new GreenfootSound("664888__yellowtree__rb-clean-guitar.wav");
+        music.playLoop();
         setImage(play);
         if(!isPressed && Greenfoot.mouseClicked(play)){
             setImage("Pause");
+            music.stop();
         }else if(isPressed && Greenfoot.mouseClicked(pause)){
-            
+            setImage("Play");
+            music.playLoop();
         }
         
     }
