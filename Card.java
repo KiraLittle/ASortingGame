@@ -17,8 +17,9 @@ public class Card extends Actor
         this.suit = suit;
         
         backImage = new GreenfootImage(suit.getName()+rank+".png");
-        backImage.scale(200,300);
+        backImage.scale(120,180);
         setImage(backImage);
+        
     }
     /**
      * Act - do whatever the Card wants to do. This method is called whenever
