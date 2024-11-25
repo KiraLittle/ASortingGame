@@ -23,5 +23,5 @@
 hs_err_pid*
 replay_pid*
 
-#Mac files
+# Mac File
 .DS_Store
