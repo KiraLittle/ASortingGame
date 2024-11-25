@@ -8,39 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Button extends Actor
 {
-    private String name;
-    private String imagePic;
-    public Button(String name,String imagePic){
-        this.name = name;
-        this.imagePic = imagePic;
-        buttonImage();
-        scaleButton(300,200);
-    }
+    /**
+     * Act - do whatever the Button wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public void act()
     {
-       if(Greenfoot.mouseClicked(this)){
-           World world = getWorld();
-           if(name.equals("Start")){
-               Greenfoot.setWorld(new MainGame());
-        }else if(name.equals("Instructions")){
-            Instructions instructions = new Instructions();
-           world.addObject(instructions, world.getWidth()/2,world.getHeight()/2);
-           
-        }else if (name.equals("Reset")){
-            Greenfoot.setWorld(new StartScreen());
-        }
-        }
-    }
-    private void buttonImage(){
-        GreenfootImage image = new GreenfootImage(imagePic);
-        setImage(image);
-        
-        
-    }
-    
-    public void scaleButton(int width,int height){
-        GreenfootImage image = getImage();
-        image.scale(width,height);
-        setImage(image);
+        // Add your action code here.
     }
 }
