@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+# Greenfoot
+project.greenfoot
+
 # BlueJ files
 *.ctxt
 
