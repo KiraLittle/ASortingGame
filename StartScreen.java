@@ -25,7 +25,7 @@ public class StartScreen extends World
         Start.scaleButton(350,250);
         addObject(Start, 284, 332);
         
-        Button instructions = new Button("instructions", "instructions.png");
+        Button instructions = new Button("Instructions", "instructions.png");
         instructions.scaleButton(220,220);
         addObject(instructions, 525, 365);
         

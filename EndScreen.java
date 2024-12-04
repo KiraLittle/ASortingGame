@@ -25,7 +25,7 @@ public class EndScreen extends World
         Button reset = new Button("Reset", "reset.png");
         addObject(reset, 303, 334);
         
-        Button instructions = new Button("instructions", "instructions.png");
+        Button instructions = new Button("Instructions", "instructions.png");
         instructions.scaleButton(220,220);
         addObject(instructions, 525, 365);
         

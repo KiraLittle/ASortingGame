@@ -23,8 +23,8 @@ public class Button extends Actor
            if(name.equals("Start")){
                Greenfoot.setWorld(new MainGame());
         }else if(name.equals("Instructions")){
-            Instructions instructions = new Instructions();
-           world.addObject(instructions, world.getWidth()/2,world.getHeight()/2);
+         Instructions instructions = new Instructions();
+         world.addObject(instructions, world.getWidth()/2,world.getHeight()/2);
            
         }else if (name.equals("Reset")){
             Greenfoot.setWorld(new StartScreen());

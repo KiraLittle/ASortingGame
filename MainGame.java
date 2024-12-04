@@ -28,18 +28,25 @@ public class MainGame extends World
         background1.scale(600,400);
         setBackground(background1);
         
+
         //instructions button
         //Button instructions = new Button("instructions", "instructions.png");
         //instructions.scaleButton(220,220);
         //addObject(instructions, 525, 365);
         
         // deck
+
+        Button instructions = new Button("Instructions", "instructions.png");
+
+        instructions.scaleButton(220,220);
+        addObject(instructions, 525, 365);
         deck = new Deck();
         deck.shuffle();
         addObject(deck, 50, 50);
         populateDeck();   
         addCardsToWorld();
         Card drawnCard = deck.drawCard();
+        
         if (drawnCard != null) {
             addObject(drawnCard, 100, 100);
         }
