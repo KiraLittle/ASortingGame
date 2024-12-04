@@ -8,18 +8,43 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Card extends Actor
 {
-    private int rank;
-    private Suit suit;
+    private String rank;
+    private String suit;
     private GreenfootImage backImage;
-    
-    public Card(int rank, Suit suit){
+    private String imageFileName;
+    public Card(String rank, String suit){
         this.rank = rank;
         this.suit = suit;
         
-        backImage = new GreenfootImage(suit.getName()+rank+".png");
+        
+        backImage = new GreenfootImage("images/backimage0.png");
         backImage.scale(120,180);
+        //setImage("backimage0.png");
+        
+    }
+    
+    public Card(String suit){
+        String rank = ""+suit.charAt(suit.length()-1);
+        this.rank = rank;
+        this.suit = suit;
+        
+        
+        backImage = new GreenfootImage("images/backimage0.png");
+        backImage.scale(85,140);
         setImage(backImage);
         
+        
+    }
+    public String getSuit(){
+        return suit;
+    }
+    public String getRank(){
+        return rank;
+    }
+    
+    public void flip(){
+        //backImage.scale(20,80);
+        setImage("images/"+suit+".png");
     }
     /**
      * Act - do whatever the Card wants to do. This method is called whenever
@@ -29,4 +54,12 @@ public class Card extends Actor
     {
         // Add your action code here.
     }
+    //public Card(String imageFileName) {
+    //    this.imageFileName = imageFileName; 
+    //}
+
+    /*@Override
+    public void addedToWorld(World world) {
+        setImage(imageFileName); 
+    }*/
 }
