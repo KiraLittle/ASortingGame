@@ -24,8 +24,8 @@ private int level = 0;
         background1.scale(600,400);
         setBackground(background1);
         
-        Button instructions = new Button("instructions", "instructions.png");
-         instructions.scaleButton(220,220);
+        Button instructions = new Button("Instructions", "instructions.png");
+        instructions.scaleButton(220,220);
         addObject(instructions, 525, 365);
         
     }
