@@ -2,6 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Write a description of class Levels here.
  * 
@@ -10,20 +11,29 @@ import java.util.List;
  */
 public class Levels extends World
 {
+
+
+    /**
+
     private int level = 0;
     Deck deck;
     private List<Card> deckOfCards;
      /**
+
      * Constructor for objects of class Levels.
      * 
      */
     public Levels()
     {    
+
+
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+
         super(600, 400, 1);  
         GreenfootImage background1 = new GreenfootImage("background2.png");
         background1.scale(600,400);
         setBackground(background1);
+
         
         Button instructions = new Button("instructions", "instructions.png");
         instructions.scaleButton(220,220);
@@ -55,5 +65,6 @@ public class Levels extends World
            /// }
         }
         
+
     }
 }
