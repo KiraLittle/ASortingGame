@@ -29,9 +29,9 @@ public class MainGame extends World
         setBackground(background1);
         
         //instructions button
-        //Button instructions = new Button("instructions", "instructions.png");
-        //instructions.scaleButton(220,220);
-        //addObject(instructions, 525, 365);
+        Button instructions = new Button("instructions", "instructions.png");
+        instructions.scaleButton(220,220);
+        addObject(instructions, 525, 365);
         
         // deck
         deck = new Deck();
@@ -119,41 +119,22 @@ public class MainGame extends World
     }
     
     public void act(){
-        drawFLBoundingBox();// far left
-        drawMLBoundingBox();//middle left
-        drawMRBoundingBox();//middle right
-        drawFRBoundingBox();//far right
+        drawBoundingBox("butterfly2.png", 76, 114); // Far left
+        drawBoundingBox("bird2.png", 220, 114);    // Middle left
+        drawBoundingBox("gate2.png", 372, 114);    // Middle right
+        drawBoundingBox("key2.png", 524, 114);  // Far right
+
     }
     
-    public void drawFLBoundingBox() {
-        GreenfootImage image = new GreenfootImage("butterfly2.png");
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int x = 76;
-        int y =114;
-        //image.setColor(Color.BLACK);
-        //image.drawRect(x, y, width , height );
-        //image.drawImage(image, x, y);
+    public void drawBoundingBox(String imageFileName, int x, int y) {
+        GreenfootImage image = getBackground();
+        GreenfootImage overlay = new GreenfootImage(imageFileName);
+        int width = 85;
+        int height = 140;
+    
+        image.setColor(Color.RED); // Bounding box color
+        image.drawRect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
+        
+        setBackground(image);
     }
-    public void drawMLBoundingBox() {
-        GreenfootImage image = new GreenfootImage("bird2.png");
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int x = 220;
-        int y =114;
-    }
-    public void drawMRBoundingBox() {
-        GreenfootImage image = new GreenfootImage("gate2.png");
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int x = 372;
-        int y =114;
-    }
-    public void drawFRBoundingBox() {
-        GreenfootImage image = new GreenfootImage("key2.png");
-        int width = image.getWidth();
-        int height = image.getHeight();
-        int x = 524;
-        int y =114;
-    }
-}
+} 
