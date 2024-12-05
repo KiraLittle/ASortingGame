@@ -42,11 +42,9 @@ public class Button extends Actor
             else if (name.equals("Musicicon")){
                 Music icon = new Music(); 
            
-            }else if (name.equals("Done??")){
-                Greenfoot.setWorld(new EndScreen()); 
-                
+            
             }
-        }
+        } 
     }
     private void buttonImage(){
         GreenfootImage image = new GreenfootImage(imagePic);
