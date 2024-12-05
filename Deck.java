@@ -12,9 +12,9 @@ import java.util.Collections;
 public class Deck extends Actor
 {
     public String cardDeck[];
+    private List<Card> cards;
     public String suits[];
     public String ranks[];
-    private List<Card> cards;
     
     public Deck(){
         cardDeck = new String[]{"butterfly2","bird2”,”gate2","key2","key3","gate3", "bird3","butterfly3","butterfly4","bird4", "gate4","key4", 
@@ -28,30 +28,23 @@ public class Deck extends Actor
         cardDeck = generateCardDeck(); 
         cards = new ArrayList<>();
         //populateDeck();
-        shuffle();
+        //shuffle();
     }
-      private String[] generateCardDeck() {
+    public String[] generateCardDeck() {
         suits = new String[]{"butterfly", "bird", "gate", "key"};
-        ranks = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "ace", "jack", "queen", "king"};
+        ranks = new String[]{"2","3","4","5","6","7","8","9","10","jack","queen","king","ace"};
         List<String> deck = new ArrayList<>();
-
         for (String suit : suits) {
             for (String rank : ranks) {
                 deck.add(suit + rank);
             }
         }
+        
 
         return deck.toArray(new String[0]);
     }
 
-    //private void populateDeck(){
-    //    for (String cardData : cardDeck) {
-    //        String suit = getSuitFromCardName(cardData);
-    //        String rank = getRankFromCardName(cardData);
-    //        Card card = new Card(rank, suit);
-     //       cards.add(card);
-       // }
-    //}
+
 
     public List<Card> getCards() {
         return new ArrayList<>(cards);
@@ -86,40 +79,7 @@ public class Deck extends Actor
         }
         return "Unknown";
     }
-     private String getRankFromCardName(String cardName) {
-       
-        if (cardName.endsWith("1")){
-            return "1";
-        }else if (cardName.endsWith("2")){
-            return "2";
-        }else if (cardName.endsWith("3")){ 
-            return "3";
-        }else if (cardName.endsWith("4")){
-            return "4";
-        }else if (cardName.endsWith("5")){
-            return "5";
-        }else if (cardName.endsWith("6")){
-            return "6";
-        }else if (cardName.endsWith("7")){ 
-            return "7";
-        }else if (cardName.endsWith("8")){
-            return "8";
-        }else if (cardName.endsWith("9")){
-            return "9";
-        }else if (cardName.endsWith("10")){ 
-            return "10";
-        }else if (cardName.endsWith("queen")){
-            return "queen";
-        }else if (cardName.endsWith("king")){
-            return "king";
-        }else if (cardName.endsWith("ace")){
-            return "ace";
-        }else if (cardName.endsWith("jack")){ 
-            return "jack";
-        }
-        
-        return "unknown";
-    }
+     
 
     @Override
     public void act(){
