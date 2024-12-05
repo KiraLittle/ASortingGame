@@ -38,7 +38,7 @@ public class MainGame extends World
         
 
         //instructions button
-        Button instructions = new Button("instructions", "instructions.png");
+        Button instructions = new Button("Instructions", "instructions.png");
         instructions.scaleButton(220,220);
         addObject(instructions, 525, 365);
         
