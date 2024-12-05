@@ -1,6 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 import java.util.List;
+//shuffle
+//import java.util.Collections;
 /**
  * Write a description of class Levels here.
  * 
@@ -11,13 +13,23 @@ public class Levels extends World
 {
 
     
-    Deck deck;
+    private Deck deck;
     private List<Card> deckOfCards;
     
     private int totalCards = 52; 
     private int cardsPlaced = 0; 
     private GreenfootImage Image;
     private int rank;
+    private static int level = 0;
+    private static int max = 4;
+    private int rankValue;
+    
+    private final int[][] boundingBoxCoordinates = {
+    {15, 176}, {60, 145}, {103, 176}, {147, 198},
+    {191, 168}, {233, 141}, {278, 174}, {323, 200},
+    {366, 174}, {407, 146}, {451, 175}, {495, 206},
+    {539, 179}, 
+    };
     
  
     public Levels()
@@ -39,12 +51,9 @@ public class Levels extends World
         deck.shuffle();
         
         
-        populateDeck();   
+        populateDeckForLevel(level);   
         addCardsToWorld();
-        Card drawnCard = deck.drawCard();
-        if (drawnCard != null) {
-            addObject(drawnCard, 100, 100);
-        }
+        
         
         //check button
         Button done = new Button("Done??", "Done?.png");
@@ -63,80 +72,133 @@ public class Levels extends World
         //addObject(new Pile("Key"), 524, 114);
     }
     
+<<<<<<< Updated upstream
 
 
         
      
     private void populateDeck() {
+=======
+    private void populateDeckForLevel(int level) {
+        //if (deckOfCards == null) {
+         //   deckOfCards = new ArrayList<>();
+        //}
+>>>>>>> Stashed changes
         deckOfCards = new ArrayList<>();
+    
+        String suit;
+        if (level == 0) {
+            suit = "butterfly";
+        } else if (level == 1) {
+            suit = "bird";
+        } else if (level == 2) {
+            suit = "gate";
+        } else if(level ==3)  {
+            suit = "key";
+        }else{
+            throw new IllegalStateException("Unexpected level: " + level);
+        }
+
+    
+         for (int i = 2; i <= 14; i++) { 
+            String rank;
+            if (i == 11) {
+                rank = "jack";
+            } else if (i == 12) {
+                rank = "queen";
+            } else if (i == 13) {
+                rank = "king";
+            } else if (i == 14) {
+                rank = "ace";
+            } else {
+                rank = String.valueOf(i);
+            }
+            Card card = new Card(rank, suit);
+            deckOfCards.add(card);
+        }
         
-        for (String imageName : deck.cardDeck){
-            Card card = new Card(imageName); 
-            deckOfCards.add(card);          
+        //shuffle
+        //Collections.shuffle(deckOfCards);
+        for (Card card : deckOfCards) {
+            System.out.println("Generated card: " + card.getSuit() + " " + card.getRank());
         }
     }
     private void addCardsToWorld() {
+<<<<<<< Updated upstream
         int x = 295;
 
         int y = 290;
+=======
+>>>>>>> Stashed changes
         
-        for (Card card : deckOfCards) {
-           addObject(card, x, y); 
-           
+    
+        for (int i = 0; i < deckOfCards.size() && i < boundingBoxCoordinates.length; i++) {
+        Card card = deckOfCards.get(i);
+        int x = boundingBoxCoordinates[i][0];
+        int y = boundingBoxCoordinates[i][1];
+        addObject(card, x, y);
+
+        // Debugging output
+        System.out.println("Placed card: " + card.getSuit() + " " + card.getRank() + " at (" + x + ", " + y + ")");
         }
+    }
+    public static void nextLevel() {
+        level++; 
+        if (level < max) {
+            Greenfoot.setWorld(new Levels());
+        } else if (level == max) {
+            Greenfoot.setWorld(new EndScreen()); 
+        }
+        }
+
+    private boolean validatePlacement() {
+        List<Card> placedCards = getObjects(Card.class);
         
-    }
-    public void cardPlaced() {
-        cardsPlaced++;
-        if (cardsPlaced == totalCards) {
-            validatePlacement();
-        }
-    }
-
-    private void validatePlacement() {
-        for (Card card : getObjects(Card.class)) {
-            String suit = card.getSuit();
-            Pile correctPile = findPileForSuit(suit);
-
+        //if (placedCards.size() != boundingBoxCoordinates.length) {
+        //    System.out.println("mismatch between cards and bounding boxes");
+        //    return false; 
+        //}
+        boolean Correct = true;
+        //user must reset entirly if order is wrong 
+        placedCards.sort((c1, c2) -> Integer.compare(c1.getX(), c2.getX()));
+    
+        for (int i = 0; i < placedCards.size(); i++){
+            Card card = placedCards.get(i);
+            int[] expectedBox = boundingBoxCoordinates[i];
+            int expectedX = expectedBox[0];
+            int expectedY = expectedBox[1];
+    
             
-            if (correctPile == null || !isOverlapping(card, correctPile)){
-                Greenfoot.playSound("boo.wav"); 
-                return; 
-            }else if(correctPile != null || isOverlapping(card, correctPile)){
-                Greenfoot.playSound("applause_y.wav");
-                Greenfoot.setWorld(new Levels()); 
-
+            int cardX = card.getX();
+            int cardY = card.getY();
+    
+            if ((cardX < expectedX) || (cardX > expectedX) ) {
+                System.out.println("Card " + card.getSuit() + card.getRank() + " is not in the correct box.");
+                Correct = false ; 
             }
         }
-        //Greenfoot.playSound("success.wav");
-        //Greenfoot.setWorld(new Levels()); 
-        
-        
-        
+    
+        System.out.println("cards are correct");
+        return Correct ;
     }
-    private Pile findPileForSuit(String suit) {
-        for (Pile pile : getObjects(Pile.class)) {
-            if (pile.getSuit().equals(suit)) {
-                return pile; 
-            }
+    private int getRankValue(String rank) {
+        if(rank.equals("jack")){
+            rankValue = 11;
+            
+        }else if (rank.equals("queen")){
+            rankValue = 12;
+            
+        }else if (rank.equals("king")){
+            rankValue = 13;
+            
+        }else if (rank.equals("ace")){ 
+            rankValue = 14;
+            
+        }else {
+            rankValue = Integer.parseInt(rank);
         }
-        return null; 
+        return rankValue;
         }
-    private boolean isOverlapping(Actor card, Actor pile) {
-        
-        int cardLeft = card.getX() - card.getImage().getWidth() / 2;
-        int cardRight = card.getX() + card.getImage().getWidth() / 2;
-        int cardTop = card.getY() - card.getImage().getHeight() / 2;
-        int cardBottom = card.getY() + card.getImage().getHeight() / 2;
-    
-        int pileLeft = pile.getX() - pile.getImage().getWidth() / 2;
-        int pileRight = pile.getX() + pile.getImage().getWidth() / 2;
-        int pileTop = pile.getY() - pile.getImage().getHeight() / 2;
-        int pileBottom = pile.getY() + pile.getImage().getHeight() / 2;
-    
-        return cardRight > pileLeft && cardLeft < pileRight && cardBottom > pileTop && cardTop < pileBottom;
-    }
-    
     public void act(){
         drawBoundingBox("butterfly2.png", 15, 176); // 1
         drawBoundingBox("bird2.png", 60, 145);    // 2
@@ -151,11 +213,27 @@ public class Levels extends World
         drawBoundingBox("gate2.png", 451, 175);    // 11
         drawBoundingBox("key2.png", 495, 206);// 12
         drawBoundingBox("bird2.png", 539, 179);    // 13
-        drawBoundingBox("gate2.png", 583, 148);    // 14
         
         
-        
+        if (Greenfoot.mouseClicked(null)) {
+            Actor clicked = Greenfoot.getMouseInfo().getActor();
+
+            if (clicked instanceof Button) {
+                Button button = (Button) clicked;
+                if (button.getName().equals("Done??")) {
+                    boolean isCorrect = validatePlacement();
+                    if (isCorrect == true ) {
+                        Greenfoot.playSound("applause_y.wav");
+                        Levels.nextLevel(); 
+                    } else {
+                        Greenfoot.playSound("boo.wav");
+                        System.out.println("not correct.");
+                        }
+                    }
+            }
         }
+    }
+        
     
     public void drawBoundingBox(String imageFileName, int x, int y) {
         GreenfootImage image = getBackground();
@@ -163,8 +241,8 @@ public class Levels extends World
         int width = 42;
         int height = 74;
     
-        image.setColor(Color.RED); // Bounding box color
-        image.drawRect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
+        image.setColor(Color.BLACK); 
+        image.drawRect(x - width / 2, y - height / 2, width, height); 
         
         setBackground(image);
 

@@ -55,7 +55,7 @@ public class Card extends Actor
         }
     public String getRank(){
         return rank;
-    }
+        }
     
     
     /**

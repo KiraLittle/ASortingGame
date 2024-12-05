@@ -39,13 +39,10 @@ public class Button extends Actor
                 //Greenfoot.setWorld(new Levels()); 
                 
             //}
-            else if (name.equals("Musicicon")){
-                Music icon = new Music(); 
+            //else if (name.equals("Musicicon")){
+                //Music icon = new Music(); 
            
-            }else if (name.equals("Done??")){
-                Greenfoot.setWorld(new EndScreen()); 
-                
-            }
+            
         }
     }
     private void buttonImage(){
