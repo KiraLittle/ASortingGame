@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Levels extends World
 {
+
     
     Deck deck;
     private List<Card> deckOfCards;
@@ -18,17 +19,14 @@ public class Levels extends World
     private GreenfootImage Image;
     private int rank;
     
-     /**
-     * Constructor for objects of class MainGame.
-     * 
-     */
+ 
     public Levels()
     {    
-        
         super(600, 400, 1);  
         GreenfootImage background1 = new GreenfootImage("background2.png");
         background1.scale(600,400);
         setBackground(background1);
+
         
         
         //instructions button
@@ -65,6 +63,10 @@ public class Levels extends World
         //addObject(new Pile("Key"), 524, 114);
     }
     
+
+
+        
+     
     private void populateDeck() {
         deckOfCards = new ArrayList<>();
         
@@ -75,6 +77,7 @@ public class Levels extends World
     }
     private void addCardsToWorld() {
         int x = 295;
+
         int y = 290;
         
         for (Card card : deckOfCards) {
@@ -164,5 +167,6 @@ public class Levels extends World
         image.drawRect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
         
         setBackground(image);
+
     }
 }
