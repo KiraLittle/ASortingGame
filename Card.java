@@ -20,9 +20,12 @@ public class Card extends Actor
         
         frontImage = new GreenfootImage("images/"+suit+rank+".png");
         frontImage.scale(85,140);
+        setImage(frontImage);
+        World world = getWorld();
+        
         //backImage = new GreenfootImage("images/backimage0.png");
         //backImage.scale(120,180);
-        setImage(frontImage);
+        
         
     }
     
@@ -39,7 +42,16 @@ public class Card extends Actor
         
     }
     public String getSuit(){
-        return suit;
+        if (suit.startsWith("butterfly")){
+            return "butterfly";
+        }else if (suit.startsWith("bird")){
+            return "bird";
+        }else if (suit.startsWith("gate")){ 
+            return "gate";
+        }else if (suit.startsWith("key")){
+            return "key";
+        }
+        return "Unknown";
         }
     public String getRank(){
         return rank;
@@ -94,5 +106,13 @@ public class Card extends Actor
         }
     private void resetPosition() {
         setLocation(getX(), getY()); 
+    }
+    @Override
+    protected void addedToWorld(World world) {
+        // Check if this world is of type Levels
+        if (world instanceof Levels) {
+            frontImage.scale(40, 70); // Scale down for Levels world
+            setImage(frontImage);    // Apply the new scaled image
+        }
     }
 }

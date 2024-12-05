@@ -11,11 +11,19 @@ import java.util.List;
 public class MainGame extends World
 {
     private int level = 0;
-    Deck deck;
+    private Deck deck;
     private List<Card> deckOfCards;
     private int totalCards = 52; 
     private int cardsPlaced = 0; 
     private GreenfootImage Image;
+    public String cardDeck[];
+    private List<Card> cards;
+    private String rank;
+    private String suit;
+    
+    
+    
+    
      /**
      * Constructor for objects of class MainGame.
      * 
@@ -34,27 +42,29 @@ public class MainGame extends World
         instructions.scaleButton(220,220);
         addObject(instructions, 525, 365);
         
-        // deck
 
-        Button instructions = new Button("Instructions", "instructions.png");
+         //deck
 
-        instructions.scaleButton(220,220);
-        addObject(instructions, 525, 365);
         deck = new Deck();
         deck.shuffle();
-        addObject(deck, 50, 50);
+        
         populateDeck();   
         addCardsToWorld();
-        Card drawnCard = deck.drawCard();
+
         
-        if (drawnCard != null) {
-            addObject(drawnCard, 100, 100);
-        }
         
-        addObject(new Pile("Butterfly"), 76, 114);
-        addObject(new Pile("Bird"), 220, 114);
-        addObject(new Pile("Gate"), 372, 114);
-        addObject(new Pile("Key"), 524, 114);
+        //check button
+        Button done = new Button("Done?", "Done?.png");
+        done.scaleButton(220,220);
+        addObject(done, 76, 365);
+        
+        //music button
+        Button Musicicon = new Button("", "Play.png");
+        Musicicon.scaleButton(60,60);
+        addObject(Musicicon, 30, 20);
+        
+        
+        
     }
     private void populateDeck() {
         deckOfCards = new ArrayList<>();
@@ -67,62 +77,67 @@ public class MainGame extends World
     private void addCardsToWorld() {
         int x = 295;
         int y = 290;
-        
         for (Card card : deckOfCards) {
            addObject(card, x, y); 
             
         }
         
     }
-    public void cardPlaced() {
-        cardsPlaced++;
-        if (cardsPlaced == totalCards) {
-            validatePlacement();
+    //public void cardPlaced() {
+    //    cardsPlaced++;
+    //    if (cardsPlaced == totalCards) {
+    //        validatePlacement();
+    //    }
+    //}
+
+    private boolean validatePlacement( ) {
+        List<Card> cards = getObjects(Card.class); 
+        boolean allCorrect= true ;
+         
+        if (cards.isEmpty()) {
+            System.out.println("No cards found in the world.");
+            return false;
         }
-    }
-
-    private void validatePlacement() {
-        for (Card card : getObjects(Card.class)) {
-            String suit = card.getSuit();
-            Pile correctPile = findPileForSuit(suit);
-
-            
-            if (correctPile == null || !isOverlapping(card, correctPile)){
-                Greenfoot.playSound("boo.wav"); 
-                return; 
-            }else if(correctPile != null || isOverlapping(card, correctPile)){
-                Greenfoot.playSound("applause_y.wav");
-                Greenfoot.setWorld(new Levels()); 
-
+        for (Card card : cards) {
+            String suit = card.getSuit(); 
+            int x = card.getX();
+            int y = card.getY();
+            System.out.println("Checking card: Suit=" + suit + ", X=" + x);
+            if (suit.equals("butterfly") && (x < 49 || x > 189)) {
+                
+                System.out.println("Butterfly card is NOT in the correct position.");
+                allCorrect = false;
+                
+            } else if (suit.equals("bird") && (x < 193 || x > 333)) {
+                
+                System.out.println("Bird card is NOT in the correct position.");
+                allCorrect = false;
+                
+            } else if (suit.equals("gate") && (x < 346 || x > 486)) {
+                
+                System.out.println("Gate card is NOT in the correct position.");
+                allCorrect = false;
+                
+            } else if (suit.equals("key") && (x < 497 || x > 637)) {
+                
+                System.out.println("Key card is NOT in the correct position.");
+                allCorrect = false;
+                
+            } 
+            if (x == 295 && y == 290) {
+                System.out.println("No cards found in the world.");
+                return false; 
             }
+            
         }
+    
+        return allCorrect;
         //Greenfoot.playSound("success.wav");
+        //Greenfoot.playSound("boo.wav"); 
         //Greenfoot.setWorld(new Levels()); 
         
         
         
-    }
-    private Pile findPileForSuit(String suit) {
-        for (Pile pile : getObjects(Pile.class)) {
-            if (pile.getSuit().equals(suit)) {
-                return pile; 
-            }
-        }
-        return null; 
-        }
-    private boolean isOverlapping(Actor card, Actor pile) {
-        
-        int cardLeft = card.getX() - card.getImage().getWidth() / 2;
-        int cardRight = card.getX() + card.getImage().getWidth() / 2;
-        int cardTop = card.getY() - card.getImage().getHeight() / 2;
-        int cardBottom = card.getY() + card.getImage().getHeight() / 2;
-    
-        int pileLeft = pile.getX() - pile.getImage().getWidth() / 2;
-        int pileRight = pile.getX() + pile.getImage().getWidth() / 2;
-        int pileTop = pile.getY() - pile.getImage().getHeight() / 2;
-        int pileBottom = pile.getY() + pile.getImage().getHeight() / 2;
-    
-        return cardRight > pileLeft && cardLeft < pileRight && cardBottom > pileTop && cardTop < pileBottom;
     }
     
     public void act(){
@@ -130,18 +145,38 @@ public class MainGame extends World
         drawBoundingBox("bird2.png", 220, 114);    // Middle left
         drawBoundingBox("gate2.png", 372, 114);    // Middle right
         drawBoundingBox("key2.png", 524, 114);  // Far right
+        if (Greenfoot.mouseClicked(null)) {
+            Actor clicked = Greenfoot.getMouseInfo().getActor(); 
 
+            if (clicked instanceof Button) { 
+                Button button = (Button) clicked;
+
+                if (button.getName().equals("Done?")) { 
+                    boolean isCorrect = validatePlacement();
+                    if (isCorrect== true) {
+                        Greenfoot.playSound("applause_y.wav");
+                        Greenfoot.setWorld(new Levels());
+                    } else {
+                        //cards are in the wrong position"
+                        Greenfoot.playSound("boo.wav");
+                    }
+                }
+            }
+        }
+       
     }
     
-    public void drawBoundingBox(String imageFileName, int x, int y) {
+    
+    public void drawBoundingBox( String imageFileName,int x, int y) {
+
         GreenfootImage image = getBackground();
-        GreenfootImage overlay = new GreenfootImage(imageFileName);
+        //GreenfootImage overlay = new GreenfootImage(imageFileName);
         int width = 85;
         int height = 140;
-    
-        image.setColor(Color.RED); // Bounding box color
-        image.drawRect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
         
+        image.setColor(Color.BLACK); // Bounding box color
+        image.drawRect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
         setBackground(image);
     }
-} 
+}
+
