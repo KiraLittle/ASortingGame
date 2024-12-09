@@ -30,6 +30,9 @@ public class Levels extends World
     {366, 174}, {407, 146}, {451, 175}, {495, 206},
     {539, 179}, 
     };
+    
+    private Timer timer;
+    private Score score;
  
     public Levels()
     {    
@@ -65,6 +68,10 @@ public class Levels extends World
         addObject(Musicicon, 30, 20);
         
         
+        timer= new Timer ();
+        addObject(timer,300,200);
+        score = new Score();
+        addObject(score,300,50);
         //addObject(new Pile("Butterfly"), 76, 114);
         //addObject(new Pile("Bird"), 220, 114);
         //addObject(new Pile("Gate"), 372, 114);
