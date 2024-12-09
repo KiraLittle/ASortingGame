@@ -22,7 +22,9 @@ public class MainGame extends World
     private String suit;
     
     
-    
+    private Timer timer;
+    private Score score;
+ 
     
      /**
      * Constructor for objects of class MainGame.
@@ -63,7 +65,11 @@ public class MainGame extends World
         Musicicon.scaleButton(60,60);
         addObject(Musicicon, 30, 20);
         
-        
+        //timer
+        timer= new Timer ();
+        addObject(timer,200,35);
+        score = new Score();
+        addObject(score,300,25);
         
     }
     private void populateDeck() {
